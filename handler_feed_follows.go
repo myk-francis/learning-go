@@ -23,7 +23,7 @@ func (apiCfg *apiConfig)handlerCreateFeedFollow(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	feed, err := apiCfg.DB.CreateFeedFollow(r.Context(), database.CreateFeedFollowParams{
+	feedFollow, err := apiCfg.DB.CreateFeedFollow(r.Context(), database.CreateFeedFollowParams{
 		ID: uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
@@ -36,7 +36,7 @@ func (apiCfg *apiConfig)handlerCreateFeedFollow(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	respondWithJSON(w, 201, databaseFeedToFeed(feed))
+	respondWithJSON(w, 201, databaseFeedFollowToFeedFollow(feedFollow))
 }
 
 
