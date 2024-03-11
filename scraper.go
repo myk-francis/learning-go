@@ -27,10 +27,7 @@ func startScraping(db *database.Queries, concurrency int, timeBetweenRequest tim
 			go scrapeFeed(db, wg, feed)
 		}
 		wg.Wait()
-
 	}
-
-	
 }
 
 func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed){
