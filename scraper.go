@@ -60,9 +60,7 @@ func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed){
 			log.Printf("Could not parse date: %v with error: %v", item.PubDate, err)
 			continue
 		}
-
-
-		db.CreatePost(context.Background(), database.CreatePostParams{
+		_, err = db.CreatePost(context.Background(), database.CreatePostParams{
 			ID:          uuid.New(),
 			CreatedAt:   time.Now().UTC(),
 			UpdatedAt:   time.Now().UTC(),
@@ -72,6 +70,10 @@ func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed){
 			Url:         item.Link,
 			FeedID:      feed.ID,
 		})
+
+		if err != nil {
+			log.Println("Failed to create post:", err)
+		}
 	}
 
 	log.Printf("Feed %s collected, %v posts found", feed.Name, len(rssFeed.Channel.Item))
